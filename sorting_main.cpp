@@ -15,20 +15,22 @@
 using namespace std;
 
 // Constant Declaration
-#define MAX_VALID_OPTION 3
+#define MAX_VALID_OPTION 4
 
 // Forward Declaration
 void RunInsertionSort(uint16_t* pInput, uint16_t nLength);
+void RunSelectionSort(uint16_t* pInput, uint16_t nLength);
 void printResult(uint16_t* inputArray, uint16_t nLength);
 
 // Main
 int main()
 {
     uint16_t nOption = 0, nLength = 0, nInputVal = 0, count = 0;
-    cout << "Choose sorting method:\n1. Insertion Sort(Poker Hand)\n2. Merge Sort\n3. Quick Sort\n:";
+    cout << "Choose sorting method:\n1. Insertion Sort(Poker Hand)\n2. Merge Sort\n3. Quick Sort\n"
+        "4. Selection Sort\n:";
     cin >> nOption;
     uint16_t* inputArray = NULL;
-    if (nOption < MAX_VALID_OPTION)
+    if (nOption <= MAX_VALID_OPTION)
     {
         cout << "Enter input length:\n";
         cin >> nLength;
@@ -61,6 +63,15 @@ int main()
     case 3:
     {
         // Run Quick Sort
+        break;
+    }
+    case 4:
+    {
+        // Run Selection Sort
+        cout << "\n Executing Insertion sort:";
+        printResult(inputArray, nLength);
+        RunSelectionSort(inputArray, nLength);
+        cout << "\nComplete Selection Sort:";
         break;
     }
     default:
@@ -115,6 +126,37 @@ void RunInsertionSort(uint16_t* pInput, uint16_t nLength)
     }
     // 4. Copy the tmpArray to original array
     memcpy(pInput, tmpArray, sizeof(uint16_t) * nLength);
+}
+
+// Implementation of selection sort
+void RunSelectionSort(uint16_t* pInput, uint16_t nLength)
+{
+    // Key of selection sort is to find min on each round
+    // and put inside the ordered array from small to big
+    // non-decreasing order
+    // uint16_t pTmpArray[nLength];
+    // memset(pTmpArray, 0, sizeof(uint16_t)*nLength);
+    for (int i = 0; i < nLength; i++)
+    {
+        uint16_t min_index = i;
+        uint16_t min_val = pInput[i];
+        for (int j = i+1; j < nLength; j++)
+        {
+            if (min_val > pInput[j])
+            {
+                min_index = j;
+                min_val = pInput[j];
+            }
+        }
+
+        // Swap only if min_index is not current slot
+        if (i != min_index)
+        {
+            // Swap current slot w/ min value
+            pInput[min_index] = pInput[i];
+            pInput[i] = min_val;
+        }
+    }
 }
 
 void printResult(uint16_t* inputArray, uint16_t nLength)
