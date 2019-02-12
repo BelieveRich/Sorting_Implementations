@@ -36,7 +36,8 @@ int main()
         memset(inputArray, 0, sizeof(uint16_t) * nLength);
         do
         {
-            cin >> nInputVal;
+            nInputVal = rand() % 100;
+            //cin >> nInputVal;
             inputArray[count++] = nInputVal;
         } while (count < nLength);
     }
